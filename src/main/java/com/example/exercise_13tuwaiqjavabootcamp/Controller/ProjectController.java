@@ -30,7 +30,7 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
         } else {
             projects.add(project);
-            return ResponseEntity.status(200).body(new ApiResponse("created!!!!"));
+            return ResponseEntity.status(200).body(new ApiResponse("created"));
         }
     }
 
@@ -57,7 +57,7 @@ public class ProjectController {
                 return ResponseEntity.status(200).body(new ApiResponse("deleted!"));
             }
         }
-        return ResponseEntity.status(200).body(new ApiResponse("not found..."));
+        return ResponseEntity.status(400).body(new ApiResponse("not found..."));
     }
 
     //• Change the project status as done or not done
@@ -65,12 +65,15 @@ public class ProjectController {
     public ResponseEntity changeStatus(@PathVariable int id, @PathVariable String status) {
         for (int index = 0; index < projects.size(); index++) {
             if (projects.get(index).getId() == id) {
-                if (status.equals("done")) {
-                    projects.get(index).setStatus("done");
-                    return ResponseEntity.status(200).body(new ApiResponse("Done!"));
-                } else if (status.equals("not done")) {
-                    projects.get(index).setStatus("not done");
-                    return ResponseEntity.status(200).body(new ApiResponse("Done!"));
+                if (status.equals("Not Started")) {
+                    projects.get(index).setStatus("Not Started");
+                    return ResponseEntity.status(200).body(new ApiResponse("Successful!"));
+                } else if (status.equals("in Progress")) {
+                    projects.get(index).setStatus("in Progress");
+                    return ResponseEntity.status(200).body(new ApiResponse("Successful!"));
+                } else if (status.equals("Completed")) {
+                    projects.get(index).setStatus("Completed");
+                    return ResponseEntity.status(200).body(new ApiResponse("Finished!"));
                 } else
                     return ResponseEntity.status(400).body(new ApiResponse("there are no status like that" + "'" + status + "'"));
             }
